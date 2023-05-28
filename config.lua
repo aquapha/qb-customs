@@ -1,6 +1,13 @@
 Config = {}
+Config.DEBUG_POLY = true
 Config.UseRadial = true
 Config.UseTarget = GetConvar('UseTarget', 'false') == 'true' -- no integration yet, not sure if worth it
+
+-- Allowed types of payment.
+Config.ALLOWED_MONEY_TYPES = {
+    'cash',
+    'bank'
+}
 
 Config.Shops = {
     ['lscustoms'] = {
@@ -156,4 +163,21 @@ Config.Pricing = {
         ['turbo'] = 5,
         ['max'] = 10,
     }
+}
+
+--[[
+    @notice DO-NOT-TOUCH
+
+    Generate a basic KVP with the key being
+    the name of the vehicle mod and the value
+    is the specific unique key for that mod.
+    see - https://wiki.rage.mp/index.php?title=Vehicle_Mods
+]]--
+MOD_KEY_VALUE_PAIR = {
+    transmission = 13,
+    suspension = 15,
+    engine = 11,
+    brakes = 12,
+    armor = 16,
+    turbo = 18,
 }

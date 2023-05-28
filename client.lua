@@ -160,7 +160,7 @@ local function CreateZones(shopZone, name)
         name = name,
         minZ = shopZone.minZ,
         maxZ = shopZone.maxZ,
-        debugPoly = true,
+        debugPoly = Config.DEBUG_POLY,
     })
 
     zone:onPlayerInOut(function(isPointInside)
@@ -247,109 +247,130 @@ end)
 
 RegisterNetEvent('qb-customs:client:performanceOptions', function(data)
     local vehicle = GetVehiclePedIsUsing(PlayerPedId())
+
+    SetVehicleModKit(vehicle, 0)
+
     if data.upgradeType == 'engine' then
         local engineMenu = {}
-        for i = 0, GetNumVehicleMods(vehicle, 11) do
+
+        for i = 0, GetNumVehicleMods(vehicle, MOD_KEY_VALUE_PAIR.engine) do
             local engineItem = {
-                header = 'Engine Level: '..i,
+                header = generateModHeader(string.format('Engine level: %s', i), vehicle, MOD_KEY_VALUE_PAIR.engine, i - 1),
                 txt = 'Install level '..i..' engine!',
                 icon = "fa-solid fa-wrench",
                 params = {
                     event = 'qb-customs:client:install',
                     args = {
+                        upgradeKey = MOD_KEY_VALUE_PAIR.engine,
                         upgradeType = 'engine',
-                        upgradeIndex = i
+                        upgradeIndex = i - 1,
+                        vehicle = vehicle,
                     }
                 }
             }
             engineMenu[#engineMenu+1] = engineItem
-            engineMenu[#engineMenu+1] = {
-                header = 'Back',
-                txt = 'Return to previous menu!',
-                icon = "fa-solid fa-arrow-left",
-                params = {
-                    event = 'qb-customs:client:performanceMods',
-                }
-            }
         end
+
+        engineMenu[#engineMenu+1] = {
+            header = 'Back',
+            txt = 'Return to previous menu!',
+            icon = "fa-solid fa-arrow-left",
+            params = {
+                event = 'qb-customs:client:performanceMods',
+            }
+        }
+
         exports['qb-menu']:openMenu(engineMenu, true)
     elseif data.upgradeType == 'brakes' then
         local brakesMenu = {}
-        for i=0, GetNumVehicleMods(vehicle, 12) do
+        for i=0, GetNumVehicleMods(vehicle, MOD_KEY_VALUE_PAIR.brakes) do
             local brakesItem = {
-                header = 'Brakes Level: '..i,
+                header = generateModHeader(string.format('Brakes level: %s', i), vehicle, MOD_KEY_VALUE_PAIR.brakes, i - 1),
                 txt = 'Install level '..i..' brakes!',
                 icon = "fa-solid fa-wrench",
                 params = {
                     event = 'qb-customs:client:install',
                     args = {
+                        upgradeKey = MOD_KEY_VALUE_PAIR.brakes,
                         upgradeType = 'brakes',
-                        upgradeIndex = i
+                        upgradeIndex = i - 1,
+                        vehicle = vehicle,
                     }
                 }
             }
             brakesMenu[#brakesMenu+1] = brakesItem
-            brakesMenu[#brakesMenu+1] = {
-                header = 'Back',
-                txt = 'Return to previous menu!',
-                icon = "fa-solid fa-arrow-left",
-                params = {
-                    event = 'qb-customs:client:performanceMods',
-                }
-            }
         end
+
+        brakesMenu[#brakesMenu+1] = {
+            header = 'Back',
+            txt = 'Return to previous menu!',
+            icon = "fa-solid fa-arrow-left",
+            params = {
+                event = 'qb-customs:client:performanceMods',
+            }
+        }
+
         exports['qb-menu']:openMenu(brakesMenu, true)
     elseif data.upgradeType == 'transmission' then
         local transmissionMenu = {}
-        for i=0, GetNumVehicleMods(vehicle, 13) do
+        for i=0, GetNumVehicleMods(vehicle, MOD_KEY_VALUE_PAIR.transmission) do
             local transmissionItem = {
-                header = 'Transmission Level: '..i,
+                header = generateModHeader(string.format('Transmission level: %s', i), vehicle, MOD_KEY_VALUE_PAIR.transmission, i - 1),
                 txt = 'Install level '..i..' transmission!',
                 icon = "fa-solid fa-wrench",
                 params = {
                     event = 'qb-customs:client:install',
                     args = {
+                        upgradeKey = MOD_KEY_VALUE_PAIR.transmission,
                         upgradeType = 'transmission',
-                        upgradeIndex = i
+                        upgradeIndex = i - 1,
+                        vehicle = vehicle,
                     }
                 }
             }
             transmissionMenu[#transmissionMenu+1] = transmissionItem
-            transmissionMenu[#transmissionMenu+1] = {
-                header = 'Back',
-                txt = 'Return to previous menu!',
-                icon = "fa-solid fa-arrow-left",
-                params = {
-                    event = 'qb-customs:client:performanceMods',
-                }
-            }
         end
+
+        transmissionMenu[#transmissionMenu+1] = {
+            header = 'Back',
+            txt = 'Return to previous menu!',
+            icon = "fa-solid fa-arrow-left",
+            params = {
+                event = 'qb-customs:client:performanceMods',
+            }
+        }
+
         exports['qb-menu']:openMenu(transmissionMenu, true)
     elseif data.upgradeType == 'suspension' then
         local suspensionMenu = {}
-        for i=0, GetNumVehicleMods(vehicle, 14) do
+
+        for i=0, GetNumVehicleMods(vehicle, MOD_KEY_VALUE_PAIR.suspension) do
             local suspensionItem = {
-                header = 'Suspension Level: '..i,
+                header = generateModHeader(string.format('Suspension level: %s', i), vehicle, MOD_KEY_VALUE_PAIR.suspension, i - 1),
                 txt = 'Install level '..i..' suspension!',
                 icon = "fa-solid fa-wrench",
                 params = {
                     event = 'qb-customs:client:install',
                     args = {
+                        upgradeKey = MOD_KEY_VALUE_PAIR.suspension,
                         upgradeType = 'suspension',
-                        upgradeIndex = i
+                        upgradeIndex = i - 1,
+                        vehicle = vehicle,
                     }
                 }
             }
             suspensionMenu[#suspensionMenu+1] = suspensionItem
-            suspensionMenu[#suspensionMenu+1] = {
-                header = 'Back',
-                txt = 'Return to previous menu!',
-                icon = "fa-solid fa-arrow-left",
-                params = {
-                    event = 'qb-customs:client:performanceMods',
-                }
-            }
         end
+
+        suspensionMenu[#suspensionMenu+1] = {
+            header = 'Back',
+            txt = 'Return to previous menu!',
+            icon = "fa-solid fa-arrow-left",
+            params = {
+                event = 'qb-customs:client:performanceMods',
+            }
+        }
+        
         exports['qb-menu']:openMenu(suspensionMenu, true)
     elseif data.upgradeType == 'turbo' then
         local turbo = IsToggleModOn(vehicle, 18)
@@ -363,29 +384,34 @@ RegisterNetEvent('qb-customs:client:performanceOptions', function(data)
         exports['qb-menu']:openMenu(upgradesMenu)
     elseif data.upgradeType == 'armor' then
         local armorMenu = {}
-        for i = 0, GetNumVehicleMods(vehicle, 16) do
+        
+        for i = 0, GetNumVehicleMods(vehicle, MOD_KEY_VALUE_PAIR.armor) do
             local armorItem = {
-                header = 'Armor Level: '..i,
+                header = generateModHeader(string.format('Armor level: %s', i), vehicle, MOD_KEY_VALUE_PAIR.armor, i - 1),
                 txt = 'Install level '..i..' armor!',
                 icon = "fa-solid fa-wrench",
                 params = {
                     event = 'qb-customs:client:install',
                     args = {
+                        upgradeKey = MOD_KEY_VALUE_PAIR.armor,
                         upgradeType = 'armor',
-                        upgradeIndex = i
+                        upgradeIndex = i - 1,
+                        vehicle = vehicle,
                     }
                 }
             }
             armorMenu[#armorMenu+1] = armorItem
-            armorMenu[#armorMenu+1] = {
-                header = 'Back',
-                txt = 'Return to previous menu!',
-                icon = "fa-solid fa-arrow-left",
-                params = {
-                    event = 'qb-customs:client:performanceMods',
-                }
-            }
         end
+
+        armorMenu[#armorMenu+1] = {
+            header = 'Back',
+            txt = 'Return to previous menu!',
+            icon = "fa-solid fa-arrow-left",
+            params = {
+                event = 'qb-customs:client:performanceMods',
+            }
+        }
+
         exports['qb-menu']:openMenu(armorMenu, true)
     elseif data.upgradeType == 'maxMods' then
         local performanceModIndices = { 11, 12, 13, 15, 16 }
@@ -402,10 +428,20 @@ end)
 
 RegisterNetEvent('qb-customs:client:install', function(data)
     QBCore.Functions.TriggerCallback('qb-customs:server:install', function(success)
-        if success then
+        if (success) then
             QBCore.Functions.Notify('Performance upgrade installed!', 'success')
-        else
-            QBCore.Functions.Notify('Not enough money!', 'error')
+
+            if (data.upgradeType == 'turbo') then
+                ToggleVehicleMod(vehicle, MOD_KEY_VALUE_PAIR.turbo, not IsToggleModOn(vehicle, MOD_KEY_VALUE_PAIR.turbo))
+
+                return
+            end
+
+            SetVehicleMod(data.vehicle, data.upgradeKey, data.upgradeIndex, false)
+            
+            return
         end
+        
+        QBCore.Functions.Notify('Not enough money!', 'error')
     end, InsideShop, data)
 end)
